@@ -1,0 +1,7 @@
+task:
+    add: Ajouter une tâche
+    duedate: Date effective
+priority: 
+    high: Haute
+    medium: Normale
+    low: Basse

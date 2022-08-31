@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des tâches{% endblock %}
+
+{% block body %}
+<style>
+    .list{
+        width : 95%;
+        margin: auto;
+        margin-top: 30px;
+    }
+</style>
+    {% for message in app.flashes('notice') %}
+    <div  class="flash-notice">
+        {{ message }}
+    </div>
+    {% endfor %}
+    Bonjour {{ app.user.email }}<br>
+    <a href="{{ path('app_logout') }}">Deconnexion</a>
+
+<div class="list">
+        {# {% if tasks.items %} #}
+    <table class="table table-striped">
+        <thead class="table-primary">
+            <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Due date</th>
+            <th scope="col">Priority</th>
+            <th scope="col" >Category</th>
+            <th scope="col" >Description</th>
+
+           
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                <td>{{task.idTask}}</td>
+                <td>{{task.nameTask}}</td>
+                <td>{{task.createdDateTask|date("d/m/Y")}}</td>
+                <td>{{task.priorityTask}}</td>
+                <td>{{task.category.libelleCategory}}</td>
+                <td>{{task.descriptionTask}}</td>
+                {# <td>{{task.libelleCategory}}</td> #}
+
+                <td><a href="{{path('app_update_task',{id:task.idTask})}}"><button type="button" class="btn btn-success">Modifier</button></a></td>
+                <td><a href="{{path('app_delete_task',{id:task.idTask})}}"><button type="button" class="btn btn-danger">Effacer</button></a></td>
+                </tr>
+            {% endfor %}
+        
+        
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {# {{ knp_pagination_render(tasks) }} #}
+    </div>
+        {# {% else %} #}
+            <div class='alert alert-light'>Vous n'avez pas de tâches</div>
+        {# {% endif %} #}
+
+    <div id="addButton">
+        <a type="button" href="{{path('app_add_task')}}" class="btn btn-info">{{'task.add'|trans}}</a>
+    </div>
+</div>
+
+
+{% endblock %}
