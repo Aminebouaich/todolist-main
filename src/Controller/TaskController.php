@@ -24,7 +24,8 @@ class TaskController extends AbstractController
     #[Route('/task/listing', name: 'app_listing_task')]
     public function listing(ManagerRegistry $doctrine): Response
     {
-        $tasks = $doctrine->getRepository(Task::class)->findAll();
+        $user = $this->getUser();
+        $tasks = $doctrine->getRepository(Task::class)->findBy(array('User' => $user));
         $categories = $doctrine->getRepository(Categories::class)->findAll();
 
         return $this->render('task/listing.html.twig', ['tasks' => $tasks, 'categories' => $categories]);
@@ -33,7 +34,9 @@ class TaskController extends AbstractController
     #[Route('/task/add', name: 'app_add_task')]
     public function add(Request $request, ManagerRegistry $doctrine, TranslatorInterface $translator): Response
     {
+        $user = $this->getUser();
         $task = new Task();
+        $task->setUser($user);
         $task->setNameTask('Write a blog post');
         $task->setDueDateTask(new \DateTime('tomorrow'));
 
