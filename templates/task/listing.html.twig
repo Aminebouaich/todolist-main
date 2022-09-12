@@ -15,9 +15,13 @@
         {{ message }}
     </div>
     {% endfor %}
-    Bonjour {{ app.user.email }}<br>
+    {% if is_granted ('ROLE_USER') %}
+    <h2>Bonjour {{ app.user.firstName ~" " ~ app.user.lastName ~ " !" }}</h2><br>
     <a href="{{ path('app_logout') }}">Deconnexion</a>
-
+    {% endif %}
+    {% if app.user %}
+    <img  class="img-fluid" style="height:50px; width:50px; border-radius: 5px;" src="{{asset("uploads/" ~  app.user.avatar)}}" alt="">
+    {% endif %}
 <div class="list">
         {# {% if tasks.items %} #}
     <table class="table table-striped">
@@ -30,7 +34,7 @@
             <th scope="col" >Category</th>
             <th scope="col" >Description</th>
 
-           
+        
             </tr>
         </thead>
         <tbody>
@@ -56,9 +60,7 @@
     <div class="navigation">
         {# {{ knp_pagination_render(tasks) }} #}
     </div>
-        {# {% else %} #}
-            <div class='alert alert-light'>Vous n'avez pas de tâches</div>
-        {# {% endif %} #}
+
 
     <div id="addButton">
         <a type="button" href="{{path('app_add_task')}}" class="btn btn-info">{{'task.add'|trans}}</a>

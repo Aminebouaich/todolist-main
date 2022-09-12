@@ -37,11 +37,13 @@ class TaskController extends AbstractController
         $user = $this->getUser();
         $task = new Task();
         $task->setUser($user);
-        $task->setNameTask('Write a blog post');
+        // $task->setNameTask('Write a blog post');
         $task->setDueDateTask(new \DateTime('tomorrow'));
 
         $form = $this->createFormBuilder($task)
-            ->add('nameTask', TextType::class)
+            ->add('nameTask', TextType::class, [
+                "attr" => ['placeholder' => "Salut"],
+            ])
             ->add('dueDateTask', DateType::class, [
                 'label' => $translator->trans('task.duedate'),
                 'widget' => 'single_text',

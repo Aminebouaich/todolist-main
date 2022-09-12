@@ -33,6 +33,9 @@ class Task
     #[ORM\ManyToOne(targetEntity: 'Categories')]
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id_category')]
     private $category;
+
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    private ?User $User = null;
     public function getIdTask(): ?int
     {
         return $this->idTask;
@@ -94,6 +97,18 @@ class Task
     public function setCategory(?Categories $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): self
+    {
+        $this->User = $User;
 
         return $this;
     }
